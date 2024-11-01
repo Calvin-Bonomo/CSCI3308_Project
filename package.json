@@ -2,10 +2,10 @@
   "name": "career-compass",
   "version": "0.0.1",
   "description": "School project for career and internship tracking web application catererd toward students",
-  "main": "index.js",
+  "main": "./ProjectSourceCode/index.js",
   "scripts": {
     "prestart": "npm install",
-    "start": "nodemon index.js"
+    "start": "nodemon ./ProjectSourceCode/index.js"
   },
   "repository": {
     "type": "git",
