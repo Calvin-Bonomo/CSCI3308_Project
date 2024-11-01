@@ -1,0 +1,35 @@
+{
+  "name": "career-compass",
+  "version": "0.0.1",
+  "description": "School project for career and internship tracking web application catererd toward students",
+  "main": "./ProjectSourceCode/index.js",
+  "scripts": {
+    "prestart": "npm install",
+    "start": "nodemon ./ProjectSourceCode/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Calvin-Bonomo/CSCI3308_Project.git"
+  },
+  "keywords": [
+    "node",
+    "web"
+  ],
+  "author": "The Rusty Koalas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Calvin-Bonomo/CSCI3308_Project/issues"
+  },
+  "homepage": "https://github.com/Calvin-Bonomo/CSCI3308_Project#readme",
+  "dependencies": {
+    "ejs": "3.1.10",
+    "ejs-lint": "2.0.0",
+    "express": "4.21.1",
+    "express-session": "1.18.1",
+    "express-handlebars": "8.0.1",
+    "pg-promise": "11.10.1",
+    "nodemon": "3.1.7",
+    "bcryptjs": "2.4.3",
+    "dotenv": "16.4.5"
+  }
+}
