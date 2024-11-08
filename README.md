@@ -1,1 +1,3 @@
 # CSCI3308_Project
+
+![ER Diagram]({67C50305-9542-4BD8-B0FE-C650F4849E44}.png)
