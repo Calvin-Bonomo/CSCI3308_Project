@@ -1,6 +1,7 @@
 CREATE TABLE interviewers
 (
   interviewer_id SERIAL PRIMARY KEY,          -- Unique identifier for each interviewer
+  application_id INT REFERENCES application(application_id) ON DELETE CASCADE, --relation
   name VARCHAR(100) NOT NULL,                 -- Full name of the interviewer
   position VARCHAR(100) NOT NULL,             -- Position or job title of the interviewer
   email VARCHAR(100) UNIQUE NOT NULL,         -- Email address (unique for each interviewer)
