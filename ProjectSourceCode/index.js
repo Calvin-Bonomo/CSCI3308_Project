@@ -34,9 +34,15 @@ app.get('/', (_, res) => {
 	res.status(200).send("Hello, World!")
 })
 
+
+// display hello world on connecto to homepage
+app.get('/welcome', (_, res) => {
+	res.json({status: 'success', message: 'Welcome!'})
+})
+
 // Start Server ------------------------------------------------------------------------------------
 
 // start the server and keep open to listen to requests
 const port = 3000
-app.listen(port);
+module.exports = app.listen(port);
 console.log("Server is listening on port " + port)
