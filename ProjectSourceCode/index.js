@@ -4,6 +4,9 @@
 // import dependencies
 const expressJs = require('express');
 const pgPromise = require('pg-promise');
+const handlebars = require('express-handlebars');
+const Handlebars = require('handlebars');
+const path = require('path');
 
 // Server Initialization ---------------------------------------------------------------------------
 
@@ -27,17 +30,29 @@ app.use(expressJs.json())
 // ??? not really sure but I think we need it
 app.use(expressJs.urlencoded({extended: true}));
 
+// From Lab 8
+const hbs = handlebars.create({
+  extname: 'hbs',
+  layoutsDir: __dirname + '/views/layouts',
+  partialsDir: __dirname + '/views/partials',
+});
+
+// Register `hbs` as our view engine using its bound `engine()` function.
+app.engine('hbs', hbs.engine);
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
+
 // Routes ------------------------------------------------------------------------------------------
 
 // display hello world on connecto to homepage
-app.get('/', (_, res) => {
-	res.status(200).send("Hello, World!")
+app.get('/', (req, res) => {
+	res.render('pages/home');
 })
 
 
 // display hello world on connecto to homepage
 app.get('/welcome', (_, res) => {
-	res.json({status: 'success', message: 'Welcome!'})
+	res.json({status: 'success', message: 'Welcome!'});
 })
 
 // Start Server ------------------------------------------------------------------------------------
