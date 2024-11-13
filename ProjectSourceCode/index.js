@@ -7,6 +7,7 @@ const pgPromise = require('pg-promise');
 const handlebars = require('express-handlebars');
 const Handlebars = require('handlebars');
 const path = require('path');
+const fs = require('fs');
 
 // Server Initialization ---------------------------------------------------------------------------
 
@@ -43,21 +44,35 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
 // Routes ------------------------------------------------------------------------------------------
+// NOTE:
+// To add new routes, add a new file .js to the ./routes directory, and implement the routes
+// in that new file. Any routes specified in a file in that directory will be automatically
+// picked by the code below. This will help reduce merge conflicts as it reduces the need to modify
+// this index.js file so frequently, allowing multiple of us to implement different routes
+// simultaneously without having to worry about messing up the git vcs tree.
+// You can use the 'get.js' file as a template for adding new routes.
 
-// display hello world on connecto to homepage
-app.get('/', (req, res) => {
-	res.render('pages/home');
-})
+const routesDir = path.join(__dirname, "routes");
+console.log("Looking for routes in " + routesDir + "...")
 
-// display hello world on connecto to homepage
-app.get('/welcome', (_, res) => {
-	res.json({status: 'success', message: 'Welcome!'});
-})
+// load all js files in ./routes/
+fs.readdirSync(routesDir).forEach((filename) => {
+	if (filename.endsWith('.js')){
 
-// render login page
-app.get('/login', (req, res) => {
-	res.render('pages/login')
-})
+		// load the exported router object
+		const route = require(path.join(routesDir, filename));
+
+		// check to ensure the route is valid
+		if (typeof(route) !== 'function'){
+			console.warn("invalid route export from " + filename)
+			return;
+		}
+
+		// listen for route api calls at specified path
+		app.use(route)
+		console.log("registered routes from " + filename)
+	}
+});
 
 // Start Server ------------------------------------------------------------------------------------
 
