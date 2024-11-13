@@ -1,16 +1,13 @@
-// ********************** Initialize server **********************************
+// COPY THESE LINES INTO NEW FILE TO CREATE A SEPARATE TEST FILE: **************
 
-const server = require('../index'); //TODO: Make sure the path to your index.js is correctly added
-
-// ********************** Import Libraries ***********************************
-
-const chai = require('chai'); // Chai HTTP provides an interface for live integration testing of the API's.
+const server = require('../index');
+const chai = require('chai'); 
 const chaiHttp = require('chai-http');
 chai.should();
 chai.use(chaiHttp);
 const {assert, expect} = chai;
 
-// ********************** DEFAULT WELCOME TESTCASE ****************************
+// ********** EVERYTHING BELOW HERE IS DIFFERENT FOR EACH TEST FILE ************
 
 describe('Server!', () => {
   // Sample test case given to test / endpoint.
@@ -24,7 +21,3 @@ describe('Server!', () => {
       });
   });
 });
-
-// *********************** TODO: WRITE 2 UNIT TESTCASES **************************
-
-// ********************************************************************************
