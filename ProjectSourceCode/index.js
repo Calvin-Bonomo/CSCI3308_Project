@@ -49,10 +49,14 @@ app.get('/', (req, res) => {
 	res.render('pages/home');
 })
 
-
 // display hello world on connecto to homepage
 app.get('/welcome', (_, res) => {
 	res.json({status: 'success', message: 'Welcome!'});
+})
+
+// render login page
+app.get('/login', (req, res) => {
+	res.render('pages/login')
 })
 
 // Start Server ------------------------------------------------------------------------------------
