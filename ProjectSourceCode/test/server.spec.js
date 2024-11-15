@@ -27,6 +27,54 @@ describe('Server!', () => {
   });
 });
 
+// ********************** REGISTER TEST CASES ****************************
+/*
+describe('Testing Add User API', () => {
+
+  before((done) => {
+    // Ensure the server is ready before running tests
+    setTimeout(done, 2000); // Wait for 2 seconds before starting tests
+  });
+
+
+  it('positive : /add_user', done => {
+    chai
+      .request(server)
+      .post('/register')
+      .send({ username: 'john_doe', password: 'password123' })
+      .end((err, res) => {
+        if (err) return done(err);
+        
+        // Check for a successful redirect
+        expect(res).to.have.status(200);
+        expect(res.redirects[0]).to.include('/login');
+        done();
+      });
+      
+  });
+
+  it('Negative : /add_user. Checking invalid name', done => {
+    chai
+      .request(server)
+      .post('/register')
+      .send({ password: 'password123' }) // Missing username
+      .end((err, res) => {
+        if (err) return done(err);
+        expect(res).to.have.status(400);
+        expect(res.text).to.include('Username and password are required');
+        done();
+      });
+      
+  });
+});
+
+*/
+
+
+
+
+
+
 // *********************** TODO: WRITE 2 UNIT TESTCASES **************************
 
 // ********************************************************************************

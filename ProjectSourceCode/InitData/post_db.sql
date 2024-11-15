@@ -7,7 +7,7 @@ CREATE TABLE posts
     upvotes INT,
     downvotes INT,
     time_posted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (username) REFERENCES users (username)
+    FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE
 );
 
 CREATE TABLE comments
