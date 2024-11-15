@@ -4,6 +4,8 @@ CREATE TABLE posts
     username VARCHAR(50) NOT NULL,
     company_name VARCHAR(255) NOT NULL,
     position VARCHAR(255) NOT NULL,
+    link VARCHAR NOT NULL,
+    modality VARCHAR(50),
     salary DECIMAL(10,2),
     upvotes INT,
     downvotes INT,
