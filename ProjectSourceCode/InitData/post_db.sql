@@ -2,8 +2,9 @@ CREATE TABLE posts
 (
     post_id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
-    title VARCHAR(255),
-    body TEXT,
+    company_name VARCHAR(255) NOT NULL,
+    position VARCHAR(255) NOT NULL,
+    salary DECIMAL(10,2),
     upvotes INT,
     downvotes INT,
     time_posted TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
