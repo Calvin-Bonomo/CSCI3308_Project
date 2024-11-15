@@ -85,3 +85,35 @@ fs.readdirSync(routesDir).forEach((filename) => {
 const port = 3000
 module.exports = app.listen(port);
 console.log("Server is listening on port " + port)
+
+
+// Login -------------------------------------------------------------------------------------------
+
+// create object to export routes through
+const router = expressJs.Router();
+
+// render login page
+router.get('/login', (req, res) => {
+	res.render('pages/login')
+})
+
+app.post('/login', async (req, res) => {
+    // check if password from request matches with password in DB
+    const select_query=`SELECT *
+                        FROM users
+                        WHERE username = $1;`;
+    await db.one(select_query, [req.body.username]).then(data=> {
+        user.username = data.username;
+        user.password = data.password;
+    });
+    const match = await bcrypt.compare(await bcrypt.hash(req.body.password, 10), user.password);
+    if (!match) {
+        res.render('pages/login');
+    } 
+    else {
+        //save user details in session like in lab 7
+        req.session.user = user;
+        req.session.save();
+    }
+
+});
