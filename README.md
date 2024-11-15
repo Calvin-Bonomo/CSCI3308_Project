@@ -1,8 +1,6 @@
 # Career Compass
 
-## Change log
-
-### 11/15
+## Change Log 11/15
 
 #### Completed:  
 * set up handlebars  
@@ -17,7 +15,7 @@
 * dynamic element generation from database queries  
 * tests for each new feature  
 
-### 11/8
+## Change Log 11/8
 
 #### Completed:  
 * finished setting up docker-compose.yaml  
