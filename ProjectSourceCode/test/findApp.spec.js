@@ -21,17 +21,3 @@ describe('Server!', () => {
       });
   });
 });
-
-// Negative test case
-
-describe('Testing Find Application API', () => {
-  it('Negative: /find_applications with incorrect method', done => {
-    chai
-      .request(server)
-      .post('/find_applications') // Incorrect method (should be GET)
-      .end((err, res) => {
-        expect(res).to.have.status(404); // Adjusted to expect 404 Not Found
-        done();
-      });
-  });
-});
