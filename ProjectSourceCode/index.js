@@ -89,11 +89,8 @@ console.log("Server is listening on port " + port)
 
 // Login -------------------------------------------------------------------------------------------
 
-// create object to export routes through
-const router = expressJs.Router();
-
 // render login page
-router.get('/login', (req, res) => {
+app.get('/login', (req, res) => {
 	res.render('pages/login')
 })
 
@@ -115,5 +112,4 @@ app.post('/login', async (req, res) => {
         req.session.user = user;
         req.session.save();
     }
-
 });
