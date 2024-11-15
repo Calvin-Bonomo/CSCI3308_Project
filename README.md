@@ -4,7 +4,7 @@
 
 #### Completed:  
 * set up handlebars  
-* implement mor modular testing so each test can be a different file  
+* implement more modular testing so each test can be a different file  
 * implement header/footer partials (website modularity)  
 * implemented partials needed for page rendering (HTML/HBS skeleton pages)  
 * implemented tests-cases for the get method for all pages and routes  
