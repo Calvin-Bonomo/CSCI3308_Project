@@ -24,6 +24,7 @@ const database = pgPromise()({
 	user: process.env.POSTGRES_USER,
 	password: process.env.POSTGRES_PASSWORD,
 });
+app.database = database
 
 // parse json in request body
 app.use(expressJs.json())
@@ -43,10 +44,12 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
+// create the user session and add it to app
 const user = {
   username: "",
   image_url: ""
 };
+app.user = user
 
 // Routes ------------------------------------------------------------------------------------------
 // NOTE:
@@ -65,17 +68,17 @@ fs.readdirSync(routesDir).forEach((filename) => {
 	if (filename.endsWith('.js')){
 
 		// load the exported router object
-		const route = require(path.join(routesDir, filename));
+		const route_module = require(path.join(routesDir, filename));
 
 		// check to ensure the route is valid
-		if (typeof(route) !== 'function'){
-			console.warn("invalid route export from " + filename)
+		if (typeof(route_module) !== 'function'){
+			console.warn("invalid module export from " + filename)
 			return;
 		}
 
 		// listen for route api calls at specified path
-		app.use(route)
-		console.log("registered routes from " + filename)
+		route_module(app)
+		console.log("executed module from " + filename)
 	}
 });
 
@@ -85,31 +88,3 @@ fs.readdirSync(routesDir).forEach((filename) => {
 const port = 3000
 module.exports = app.listen(port);
 console.log("Server is listening on port " + port)
-
-
-// Login -------------------------------------------------------------------------------------------
-
-// render login page
-app.get('/login', (req, res) => {
-	res.render('pages/login')
-})
-
-app.post('/login', async (req, res) => {
-    // check if password from request matches with password in DB
-    const select_query=`SELECT *
-                        FROM users
-                        WHERE username = $1;`;
-    await database.one(select_query, [req.body.username]).then(data=> {
-        user.username = data.username;
-        user.password = data.password;
-    });
-    const match = await bcrypt.compare(await bcrypt.hash(req.body.password, 10), user.password);
-    if (!match) {
-        res.render('pages/login');
-    } 
-    else {
-        //save user details in session like in lab 7
-        req.session.user = user;
-        req.session.save();
-    }
-});

@@ -1,12 +1,21 @@
-// create object to export routes through
-const expressJs = require('express');
-const router = expressJs.Router();
+/**
+ * entry point for the route module, this function is immediately called when
+ * the file is loaded by index.js
+ * @typedef {import('express').Express} ExpressJs
+ * @typedef {import('pg-promise').IDatabase} IDatabase
+ * @param {ExpressJs} app 
+ */
+function main(app){
 
-// render myApplications page
-router.get('/my_applications', (req, res) => {
-    res.render('pages/myApplications');
-})
+    // get handle to database from app
+    /** @type {IDatabase} */
+    const database = app.database
 
-// export the specified routes in this file
-module.exports = router;
+    // render myApplications page
+    app.get('/my_applications', (req, res) => {
+        res.render('pages/myApplications');
+    })
+}
 
+// export the specified entry point
+module.exports = main;
