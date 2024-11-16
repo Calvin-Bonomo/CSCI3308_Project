@@ -16,7 +16,7 @@ const fs = require('fs');
 const app = expressJs();
 
 // connect the database and store a handle to it
-/** @type {pgPromise.IMain} */
+/** @type {pgPromise.IDatabase} */
 const database = pgPromise()({
 	host: 'db',
 	port: 5432,
@@ -99,7 +99,7 @@ app.post('/login', async (req, res) => {
     const select_query=`SELECT *
                         FROM users
                         WHERE username = $1;`;
-    await db.one(select_query, [req.body.username]).then(data=> {
+    await database.one(select_query, [req.body.username]).then(data=> {
         user.username = data.username;
         user.password = data.password;
     });
