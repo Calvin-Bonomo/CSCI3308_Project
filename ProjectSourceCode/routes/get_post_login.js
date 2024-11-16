@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 /**
  * entry point for the route module, this function is immediately called when
  * the file is loaded by index.js
@@ -14,26 +16,36 @@ function main(app){
 
 	// Login ---------------------------------------------------------------------------------------
 
+	// create user object to store info from database
+	const user = {
+		username: "",
+		password: "",
+	}
+
 	// render login page
 	app.get('/login', (req, res) => {
 		res.render('pages/login')
 	})
 
 	app.post('/login', async (req, res) => {
-	    // check if password from request matches with password in DB
-	    const select_query=`SELECT *
-	                        FROM users
-	                        WHERE username = $1;`;
-	    await database.one(select_query, [req.body.username]).then(data=> {
-	        user.username = data.username;
+
+		// fetch user data
+		// TODO handle case where user is not found
+		const select_query=`SELECT * FROM users WHERE username = $1;`;
+	    await database.one(select_query, [req.body.username]).then(data => {
+			user.username = data.username;
 	        user.password = data.password;
 	    });
+
+		// check if password from request matches with password in DB
 	    const match = await bcrypt.compare(await bcrypt.hash(req.body.password, 10), user.password);
+
 	    if (!match) {
+			// TODO respond with bad request
 	        res.render('pages/login');
 	    } 
 	    else {
-	        //save user details in session like in lab 7
+	        // save user details in session like in lab 7
 	        req.session.user = user;
 	        req.session.save();
 	    }
