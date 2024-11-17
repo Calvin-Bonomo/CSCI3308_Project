@@ -34,7 +34,7 @@ function main(app){
 				user.password = pass_hashed
 			})
 			.catch(err => {
-				res.status(400)
+				res.status(400).render("pages/register")
 				throw err
 			})
 		
@@ -42,7 +42,7 @@ function main(app){
 		let user_exists = false
 		await database.none("SELECT username FROM users WHERE username = $1", [user.username])
 			.catch(err => {
-				res.status(400)
+				res.status(400).render("pages/register")
 				console.warn(err)
 				user_exists = true
 			})
@@ -59,11 +59,11 @@ function main(app){
 		)
 		await database.none(query, [user.username, user.password])
 			.then(() => {
-				res.status(200)
+				res.status(200).render("pages/login")
 				console.log("registered new user '" + user.username + "'")
 			})
 			.catch(err => {
-				res.status(400)
+				res.status(400).render("pages/register")
 				throw err
 			})
 	});

@@ -16,12 +16,6 @@ function main(app){
 
 	// Login ---------------------------------------------------------------------------------------
 
-	// create user object to store info from database
-	const user = {
-		username: "",
-		password: "",
-	}
-
 	// render login page
 	app.get('/login', (req, res) => {
 		res.render('pages/login')
@@ -29,25 +23,47 @@ function main(app){
 
 	app.post('/login', async (req, res) => {
 
+		// create user object to store info from database
+		const user = {
+			username: req.body.username,
+			password: ""
+		}
+		console.log("attempting login for user - " + user.username)
+
 		// fetch user data
-		// TODO handle case where user is not found
+		let user_found = false
 		const select_query=`SELECT * FROM users WHERE username = $1;`;
-	    await database.one(select_query, [req.body.username]).then(data => {
-			user.username = data.username;
-	        user.password = data.password;
-	    });
+	    await database.one(select_query, [user.username])
+			.then(data => {
+				user.username = data.username;
+				user.password = data.password;
+				user_found = true;
+				console.log("found user in database - " + user.username)
+	    	})
+			.catch(err => {
+				console.error(err)
+				res.status(400).render('pages/login')
+			})
+		if(!user_found){
+			console.warn("User not found - " + user.username)
+			return
+		}
 
 		// check if password from request matches with password in DB
-	    const match = await bcrypt.compare(await bcrypt.hash(req.body.password, 10), user.password);
+		console.log("hashing password input...")
+	    const match = await bcrypt.compare(req.body.password, user.password)
+		console.log("comparing hashes...")
 
 	    if (!match) {
-			// TODO respond with bad request
-	        res.render('pages/login');
+			res.status(400).render('pages/login');
+			console.warn("Pasword hash mismatch!")
 	    } 
 	    else {
 	        // save user details in session like in lab 7
 	        req.session.user = user;
 	        req.session.save();
+			res.status(200).render('pages/landing')
+			console.log("login succsessful!")
 	    }
 	});
 }

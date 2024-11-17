@@ -5,6 +5,7 @@
 const expressJs = require('express');
 const pgPromise = require('pg-promise');
 const handlebars = require('express-handlebars');
+const session = require('express-session');
 const Handlebars = require('handlebars');
 const path = require('path');
 const fs = require('fs');
@@ -26,10 +27,8 @@ const database = pgPromise()({
 });
 app.database = database
 
-// parse json in request body
+// parse json in request body / forms
 app.use(expressJs.json())
-
-// ??? not really sure but I think we need it
 app.use(expressJs.urlencoded({extended: true}));
 
 // From Lab 8
@@ -44,12 +43,14 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-// create the user session and add it to app
-const user = {
-  username: "",
-  image_url: ""
-};
-app.user = user
+// tell the app to use session storage in HTTP requests
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    saveUninitialized: true,
+    resave: true
+  })
+)
 
 // Routes ------------------------------------------------------------------------------------------
 // NOTE:
