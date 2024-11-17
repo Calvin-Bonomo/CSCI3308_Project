@@ -20,9 +20,9 @@ function main(app){
 	app.get('/login', (req, res) => {
 		
 		// ensure user is not already logged in
-		if(req.session.username) {
+		if(req.session.user) {
 			console.warn("attempt to access login while logged in, redirecting..")
-			res.redirect(400, '/landing')
+			res.status(400).redirect('/landing')
 			return
 		}
 
@@ -33,7 +33,7 @@ function main(app){
 	app.post('/login', async (req, res) => {
 		
 		// ensure user is not already logged in
-		if(req.session.username) {
+		if(req.session.user) {
 			console.warn("abort attempt to login while logged in")
 			res.status(400).end()
 			return

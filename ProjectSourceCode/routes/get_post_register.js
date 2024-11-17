@@ -17,9 +17,9 @@ function main(app){
 	app.get('/register', (req, res) => {
 		
 		// ensure user is not logged in
-		if(req.session.username) {
+		if(req.session.user) {
 			console.warn("attempt to access register while logged in, redirecting..")
-			res.redirect('/landing')
+			res.status(400).redirect('/landing')
 			return
 		}
 		
@@ -31,7 +31,7 @@ function main(app){
 	app.post('/register', async (req, res) => {
 
 		// ensure user is not already logged in
-		if(req.session.username) {
+		if(req.session.user) {
 			console.warn("abort attempt to register while logged in")
 			res.status(400).end()
 			return

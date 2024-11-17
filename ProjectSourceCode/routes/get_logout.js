@@ -15,16 +15,16 @@ function main(app){
 	app.get('/logout', (req, res) => {
 		
 		// ensure user is logged in
-		if(!req.session.username) {
+		if(!req.session.user) {
 			console.warn("attempt to logout while not logged in, redirecting to login..")
-			res.redirect('/login')
+			res.status(400).redirect('/login')
 			return
 		}
 
 		// log out
 		req.session.destroy();
 		console.log("Logout Successful!")
-		res.redirect('pages/home');
+		res.status(200).redirect('/');
 	})
 }
 
