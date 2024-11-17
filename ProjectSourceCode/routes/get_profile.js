@@ -14,6 +14,15 @@ function main(app){
 
 	// display login page
 	app.get('/profile', (req, res) => {
+
+		// ensure user is logged in
+		if(!req.session.username) {
+			console.warn("attempt to access profile while not logged in, redirecting to login..")
+			res.redirect('/login')
+			return
+		}
+
+		// display page
 		res.render('pages/login');
 	})
 }

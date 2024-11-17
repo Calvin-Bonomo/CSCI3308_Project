@@ -18,10 +18,26 @@ function main(app){
 
 	// render login page
 	app.get('/login', (req, res) => {
+		
+		// ensure user is not already logged in
+		if(req.session.username) {
+			console.warn("attempt to access login while logged in, redirecting..")
+			res.redirect(400, '/landing')
+			return
+		}
+
+		// display page
 		res.render('pages/login')
 	})
 
 	app.post('/login', async (req, res) => {
+		
+		// ensure user is not already logged in
+		if(req.session.username) {
+			console.warn("abort attempt to login while logged in")
+			res.status(400).end()
+			return
+		}
 
 		// create user object to store info from database
 		const user = {
@@ -62,7 +78,7 @@ function main(app){
 	        // save user details in session like in lab 7
 	        req.session.user = user;
 	        req.session.save();
-			res.status(200).render('pages/landing')
+			res.status(200).redirect("/landing")
 			console.log("login succsessful!")
 	    }
 	});

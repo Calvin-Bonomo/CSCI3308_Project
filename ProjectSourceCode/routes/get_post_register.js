@@ -15,12 +15,28 @@ function main(app){
 
 	// display register page
 	app.get('/register', (req, res) => {
+		
+		// ensure user is not logged in
+		if(req.session.username) {
+			console.warn("attempt to access register while logged in, redirecting..")
+			res.redirect('/landing')
+			return
+		}
+		
+		// display registration page
 		res.render('pages/register');
 	});
 
 	// process register request
 	app.post('/register', async (req, res) => {
-		
+
+		// ensure user is not already logged in
+		if(req.session.username) {
+			console.warn("abort attempt to register while logged in")
+			res.status(400).end()
+			return
+		}
+
 		// create object to store user data
 		const user = {
 			username: req.body.username,

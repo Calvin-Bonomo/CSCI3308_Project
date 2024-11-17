@@ -13,7 +13,18 @@ function main(app){
 
 	// display logout page when request that url
 	app.get('/logout', (req, res) => {
-		res.render('pages/logout');
+		
+		// ensure user is logged in
+		if(!req.session.username) {
+			console.warn("attempt to logout while not logged in, redirecting to login..")
+			res.redirect('/login')
+			return
+		}
+
+		// log out
+		req.session.destroy();
+		console.log("Logout Successful!")
+		res.redirect('pages/home');
 	})
 }
 
