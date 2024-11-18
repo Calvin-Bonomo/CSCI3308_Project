@@ -25,18 +25,38 @@ const JOB_MODALITY = Object.freeze({
 
 /**
  * Type that represents a user posting
- * @property {Number} post_id The unique post id for this post
- * @property {String} username the user who created the post
- * @property {String} company_name the name of the company the job post was for
- * @property {String} position the title of the job position
- * @property {String} link a link to the job posting
- * @property {String} body a decsription from the user
- * @property {Number} modality
- * @property {Number} salary the salary of the job
- * @property {Number} upvotes 
- * @property {Number} downvotes 
+ * @property {number} post_id The unique post id for this post
+ * @property {string} username the user who created the post
+ * @property {string} company_name the name of the company the job post was for
+ * @property {string} position the title of the job position
+ * @property {string} link a link to the job posting
+ * @property {string} body a decsription from the user
+ * @property {number} modality
+ * @property {number} salary the salary of the job
+ * @property {number} upvotes 
+ * @property {number} downvotes 
  */
 class UserPost{
+	/** @property {number} post_id The unique post id for this post */
+	post_id
+	/** @property {string} username the user who created the post */
+	username
+	/** @property {string} company_name the name of the company the job post was for */
+	company_name
+	/** @property {string} position the title of the job position */
+	position
+	/** @property {string} link a link to the job posting */
+	link
+	/** @property {string} body a decsription from the user */
+	body
+	/** @property {number} modality */
+	modality
+	/** @property {number} salary the salary of the job */
+	salary
+	/** @property {number} upvotes  */
+	upvotes
+	/** @property {number} downvotes  */
+	downvotes
 	constructor(){
 		this.post_id = null
 		this.username = ""
@@ -77,8 +97,38 @@ class UserPost{
 	}
 
 	/**
+	 * fetch all posts with authored by the given user
+	 * @returns {Array<UserPost>}
+	 * @param {IDatabase} database
+	 * @param {string} username 
+	 */
+	static async FetchPostsByUser(database, username){
+		const m = []
+
+		// query for all posts created by the given user and store them in the return array
+		const query = "SELECT * FROM posts WHERE username=$1";
+		database.any(query, [username])
+			.then((data) => {
+				for(post of data) {
+					m.push(UserPost.FromJson(post))
+				}
+			})
+		return m
+	}
+
+	/**
+	 * delete the post with the given post ID, returns true if successful otherwise false
+	 * @returns {boolean}
+	 * @param {IDatabase} database 
+	 * @param {Number} post_id 
+	 */
+	static async DeletePost(database, post_id){
+		throw "not implemented"
+	}
+
+	/**
 	 * stores an item in the database if possible, otherwise returns false
-	 * @returns {Boolean}
+	 * @returns {boolean}
 	 * @param {IDatabase} database 
 	 */
 	async storeInDB(database){
@@ -123,6 +173,10 @@ class UserPost{
 			})
 			
 		return stored
+	}
+
+	async deleteFromDB(database){
+		UserPost.DeletePost(database, this.post_id)
 	}
 }
 
