@@ -75,7 +75,7 @@ function main(app){
 		)
 		await database.none(query, [user.username, user.password])
 			.then(() => {
-				res.status(200).render("pages/login")
+				res.status(200).redirect("/login")
 				console.log("registered new user '" + user.username + "'")
 			})
 			.catch(err => {
