@@ -2,7 +2,7 @@
  * @typedef {import('pg-promise').IDatabase} IDatabase
  */
 
-/** @enum {Number} */
+/** @enum {number} */
 const JOB_MODALITY = Object.freeze({
 	IN_PERSON: 0,
 	REMOTE: 1,
@@ -10,7 +10,7 @@ const JOB_MODALITY = Object.freeze({
 	OTHER: 3,
 
 	/**
-	 * @returns {String}
+	 * @returns {string}
 	 * @param {this.JOB_MODALITY} mode 
 	 */
 	toString: function(mode) {
@@ -24,39 +24,33 @@ const JOB_MODALITY = Object.freeze({
 })
 
 /**
- * Type that represents a user posting
- * @property {number} post_id The unique post id for this post
- * @property {string} username the user who created the post
- * @property {string} company_name the name of the company the job post was for
- * @property {string} position the title of the job position
- * @property {string} link a link to the job posting
- * @property {string} body a decsription from the user
- * @property {number} modality
- * @property {number} salary the salary of the job
- * @property {number} upvotes 
- * @property {number} downvotes 
+ * data structure that represents data pertaining to a user posting
  */
 class UserPost{
-	/** @property {number} post_id The unique post id for this post */
+
+	/** @type {number} post_id The unique post id for this post */ 
 	post_id
-	/** @property {string} username the user who created the post */
+	/** @type {string} username the user who created the post */ 
 	username
-	/** @property {string} company_name the name of the company the job post was for */
+	/** @type {string} company_name the name of the company the job post was for */ 
 	company_name
-	/** @property {string} position the title of the job position */
+	/** @type {string} position the title of the job position */ 
 	position
-	/** @property {string} link a link to the job posting */
+	/** @type {string} link a link to the job posting */ 
 	link
-	/** @property {string} body a decsription from the user */
+	/** @type {string} body a decsription from the user */ 
 	body
-	/** @property {number} modality */
+	/** @type {number} modality */ 
 	modality
-	/** @property {number} salary the salary of the job */
+	/** @type {number} salary the salary of the job */ 
 	salary
-	/** @property {number} upvotes  */
+	/** @type {number} upvotes  */ 
 	upvotes
-	/** @property {number} downvotes  */
+	/** @type {number} downvotes  */ 
 	downvotes
+	/** @type {Date} */
+	time_posted
+
 	constructor(){
 		this.post_id = null
 		this.username = ""
@@ -107,7 +101,7 @@ class UserPost{
 
 		// query for all posts created by the given user and store them in the return array
 		const query = "SELECT * FROM posts WHERE username=$1";
-		database.any(query, [username])
+		await database.any(query, [username])
 			.then((data) => {
 				for(post of data) {
 					m.push(UserPost.FromJson(post))
@@ -120,7 +114,7 @@ class UserPost{
 	 * delete the post with the given post ID, returns true if successful otherwise false
 	 * @returns {boolean}
 	 * @param {IDatabase} database 
-	 * @param {Number} post_id 
+	 * @param {number} post_id 
 	 */
 	static async DeletePost(database, post_id){
 		throw "not implemented"
