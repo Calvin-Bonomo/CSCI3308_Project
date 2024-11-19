@@ -2,6 +2,8 @@
  * @typedef {import('pg-promise').IDatabase} IDatabase
  */
 
+const { query } = require('express');
+
 /** @enum {number} */
 const JOB_MODALITY = Object.freeze({
 	IN_PERSON: 0,
@@ -103,7 +105,7 @@ class UserPost{
 		const query = "SELECT * FROM posts WHERE username=$1";
 		await database.any(query, [username])
 			.then((data) => {
-				for(post of data) {
+				for(let post of data) {
 					m.push(UserPost.FromJson(post))
 				}
 			})
@@ -111,13 +113,17 @@ class UserPost{
 	}
 
 	/**
-	 * delete the post with the given post ID, returns true if successful otherwise false
-	 * @returns {boolean}
+	 * delete the post with the given post ID
 	 * @param {IDatabase} database 
 	 * @param {number} post_id 
 	 */
 	static async DeletePost(database, post_id){
-		throw "not implemented"
+		const query = "DELETE FROM posts WHERE post_id=$1;"
+		await database.none(query, [post_id])
+			.then(() => {
+				console.log("delete post #" + post_id)
+			})
+			.catch(err => {console.error(err)})
 	}
 
 	/**
@@ -169,6 +175,10 @@ class UserPost{
 		return stored
 	}
 
+	/**
+	 * Deletes this post object from the database (based on this.post_id)
+	 * @param {IDatabase} database 
+	 */
 	async deleteFromDB(database){
 		UserPost.DeletePost(database, this.post_id)
 	}

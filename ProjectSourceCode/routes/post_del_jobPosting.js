@@ -13,6 +13,14 @@ function main(app){
     /** @type {IDatabase} */
     const database = app.database
 
+	// get all jobs posted by user specified in request body
+	app.get('/job_posting', async (req, res) => {
+		const username = req.body.username
+		const results = await UserPost.UserPost.FetchPostsByUser(database, username)
+			.catch(err => {console.error(err); res.status(400).send()})
+		res.status(200).json(results)
+	})
+
 	// store user post
 	app.post('/job_posting', async (req, res) => {
 
@@ -36,6 +44,14 @@ function main(app){
 			console.error("failed to create job post")
 			res.status(400).end()
 		}
+	})
+
+	// delete the post with post_id specified in request body
+	app.delete('/job_posting', (req, res) => {
+		const post_id = req.body.post_id
+		UserPost.UserPost.DeletePost(database, post_id)
+			.then(() => {res.status(200).send()})
+			.catch(err => {console.error(err)})
 	})
 }
 
