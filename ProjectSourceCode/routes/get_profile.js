@@ -3,8 +3,8 @@ const expressJs = require('express');
 const router = expressJs.Router();
 
 // display login page
-router.get('/login', (req, res) => {
-	res.render('pages/login');
+router.get('/profile', (req, res) => {
+	res.render('pages/profile');
 })
 
 // export the specified routes in this file
