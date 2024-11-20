@@ -43,6 +43,11 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
+const user = {
+  username: "",
+  image_url: ""
+};
+
 // Routes ------------------------------------------------------------------------------------------
 // NOTE:
 // To add new routes, add a new file .js to the ./routes directory, and implement the routes
