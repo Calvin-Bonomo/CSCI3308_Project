@@ -9,11 +9,23 @@ function main(app){
 
     // get handle to database from app
     /** @type {IDatabase} */
-    const database = app.database
+    const database = app.database;
+    let page = 1;
+    const page_size = 10;
 
     // render findApplications page
     app.get('/find_applications', (req, res) => {
-        res.render('pages/findApplications');
+      const query = "select * from posts order by time_posted desc limit $1 offset $2;";
+
+      database.any(query, [page_size, page]).then(data => {
+        res.render('pages/findApplications').json({
+          posts: data,
+        });
+      }).catch(err => {
+          console.warn("failed to select from posts");
+          res.render('pages/findApplications');
+      });
+
     })
 }
 
