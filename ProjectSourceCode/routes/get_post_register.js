@@ -38,6 +38,12 @@ function main(app){
 			return
 		}
 
+		// ensure username and password are valid
+		if(req.body.username.length <= 0 || req.body.password.length <= 0){
+			res.status(400).render("pages/register", PageContext.Create(app, req))
+			return
+		}
+
 		// create object to store user data
 		const user = {
 			username: req.body.username,
