@@ -1,3 +1,5 @@
+const { PageContext } = require('../modules/page_context');
+
 /**
  * entry point for the route module, this function is immediately called when
  * the file is loaded by index.js
@@ -13,7 +15,7 @@ function main(app){
 
 	// display forgot password page when url is requested
 	app.get('/forgot_password', (req, res) => {
-		res.render('pages/forgotPassword');
+		res.render('pages/forgotPassword', PageContext.Create(app, req));
 	})
 }
 

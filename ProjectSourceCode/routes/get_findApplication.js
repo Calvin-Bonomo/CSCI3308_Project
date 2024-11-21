@@ -1,3 +1,6 @@
+const UserPost = require('../modules/user_post');
+const { PageContext } = require('../modules/page_context');
+
 /**
  * entry point for the route module, this function is immediately called when
  * the file is loaded by index.js
@@ -10,22 +13,22 @@ function main(app){
     // get handle to database from app
     /** @type {IDatabase} */
     const database = app.database;
-    let page = 1;
+    const page = 1;
     const page_size = 10;
 
     // render findApplications page
     app.get('/find_applications', (req, res) => {
-      const query = "select * from posts order by time_posted desc limit $1 offset $2;";
-
-      database.any(query, [page_size, page]).then(data => {
-        res.render('pages/findApplications').json({
-          posts: data,
+      UserPost.UserPost.FetchPostsByDate(database, page_size, (page - 1) * page_size)
+        .then(data => {
+          res.render(
+            'pages/findApplications', 
+            PageContext.Create(app, req, {posts: data})
+          )
+        })
+        .catch(err => {
+          console.error(err)
+          res.status(400).end()
         });
-      }).catch(err => {
-          console.warn("failed to select from posts");
-          res.render('pages/findApplications');
-      });
-
     })
 }
 
