@@ -7,7 +7,7 @@
     "prestart": "npm install",
     "start": "nodemon ./ProjectSourceCode/index.js",
     "test": "mocha ./ProjectSourceCode/test/*.spec.js",
-    "testandrun": "npm start"
+    "testandrun": "npm run prestart && npm run test && npm start"
   },
   "repository": {
     "type": "git",
