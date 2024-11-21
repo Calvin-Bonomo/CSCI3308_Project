@@ -23,14 +23,14 @@
           <a class="nav-link" href="/find_applications">Find Applications</a>
         </li>
        </ul>
-       {{#if user.username}}
-       <div class="nav-item me1">
+       {{#if session.user}}
+       <div class="nav-item me-1">
         <a href="/profile">
-        {{!-- {{#if user.image_url}}
-          <img src={{user.image_url}} alt="Your profile picture">
+        {{#if session.user.image_url}}
+          <img src={{session.user.image_url}} alt="Your profile picture">
         {{else}}
-          <img src="" alt="Your profile picture">
-        {{/if}}--}}
+          <img src="" alt="{{session.user.username}}">
+        {{/if}}
         </a>
        </div>
        <div class="nav-item me-1">
