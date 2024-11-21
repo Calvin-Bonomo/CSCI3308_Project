@@ -52,6 +52,16 @@ class UserPost{
 	downvotes
 	/** @type {Date} */
 	time_posted
+	/** @readonly @type {Number} (calculated) the total number of points, upvotes - downvotes */
+	points
+	/** @readonly @type {string} (calculated) user readable string representing the modality */
+	modality_string
+
+	/** updates the calculated properties */
+	updateProperties(){
+		this.points = this.upvotes - this.downvotes
+		this.modality_string = JOB_MODALITY.toString(this.modality)
+	}
 
 	constructor(){
 		this.post_id = null
@@ -89,7 +99,32 @@ class UserPost{
 				m[key] = json[key]
 			}
 		}
+		m.updateProperties()
 		return m
+	}
+
+	/**
+	 * returns all posts by any user ordered by date, with the specified limit and offset
+	 * @returns {Array<UserPost>}
+	 * @param {IDatabase} database 
+	 * @param {Number} limit the max number of items to return
+	 * @param {Number} offset which item to start at
+	 */
+	static async FetchPostsByDate(database, limit, offset){
+		const query = (
+			"SELECT * FROM posts " +
+			"ORDER BY time_posted DESC " +
+			"LIMIT $1 OFFSET $2;"
+		)
+		return await database.any(query, [limit, offset])
+			.then((data) => {
+				var m = []
+				for(let item of data){
+					m.push(UserPost.FromJson(item))
+				}
+				return m
+			})
+			.catch(err => {console.error(err); return [];})
 	}
 
 	/**
@@ -102,7 +137,7 @@ class UserPost{
 		const m = []
 
 		// query for all posts created by the given user and store them in the return array
-		const query = "SELECT * FROM posts WHERE username=$1";
+		const query = "SELECT * FROM posts WHERE username=$1;";
 		await database.any(query, [username])
 			.then((data) => {
 				for(let post of data) {
@@ -154,7 +189,7 @@ class UserPost{
 		const store_query = (
 			"INSERT INTO posts (username, company_name, position, link, modality, body, salary)" +
 			"VALUES ($1, $2, $3, $4, $5, $6, $7)" +
-			"RETURNING post_id"
+			"RETURNING post_id;"
 		)
 		let stored = false
 		await database.one(

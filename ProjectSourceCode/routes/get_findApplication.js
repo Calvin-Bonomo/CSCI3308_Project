@@ -1,3 +1,5 @@
+const UserPost = require('../modules/user_post');
+
 /**
  * entry point for the route module, this function is immediately called when
  * the file is loaded by index.js
@@ -10,14 +12,12 @@ function main(app){
     // get handle to database from app
     /** @type {IDatabase} */
     const database = app.database;
-    let page = 1;
+    const page = 1;
     const page_size = 10;
 
     // render findApplications page
     app.get('/find_applications', (req, res) => {
-      const query = "select * from posts order by time_posted desc limit $1 offset $2;";
-
-      database.any(query, [page_size, page])
+      UserPost.UserPost.FetchPostsByDate(database, page_size, (page - 1) * page_size)
         .then(data => {
           res.render('pages/findApplications', {posts: data})
         })
