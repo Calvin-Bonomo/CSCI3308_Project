@@ -43,7 +43,7 @@ class PageContext{
 	 * @param {ExpressJs} app 
 	 */
 	setApp(app){
-		this.app = app
+		// this.app = app
 	}
 }
 
