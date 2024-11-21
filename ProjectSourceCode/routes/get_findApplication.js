@@ -1,4 +1,5 @@
 const UserPost = require('../modules/user_post');
+const PageContext = require('../modules/page_context');
 
 /**
  * entry point for the route module, this function is immediately called when
@@ -19,7 +20,10 @@ function main(app){
     app.get('/find_applications', (req, res) => {
       UserPost.UserPost.FetchPostsByDate(database, page_size, (page - 1) * page_size)
         .then(data => {
-          res.render('pages/findApplications', {posts: data})
+          res.render(
+            'pages/findApplications', 
+            PageContext.PageContext.Create(app, req, {posts: data})
+          )
         })
         .catch(err => {
           console.error(err)
