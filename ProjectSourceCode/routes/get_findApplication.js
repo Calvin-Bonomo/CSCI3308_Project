@@ -1,5 +1,5 @@
 const UserPost = require('../modules/user_post');
-const PageContext = require('../modules/page_context');
+const { PageContext } = require('../modules/page_context');
 
 /**
  * entry point for the route module, this function is immediately called when
@@ -22,7 +22,7 @@ function main(app){
         .then(data => {
           res.render(
             'pages/findApplications', 
-            PageContext.PageContext.Create(app, req, {posts: data})
+            PageContext.Create(app, req, {posts: data})
           )
         })
         .catch(err => {

@@ -1,3 +1,5 @@
+const { PageContext } = require('../modules/page_context');
+
 /**
  * entry point for the route module, this function is immediately called when
  * the file is loaded by index.js
@@ -13,7 +15,7 @@ function main(app){
 
 	// display homepage when connecting to website root
 	app.get('/', (req, res) => {
-		res.render('pages/home');
+		res.render('pages/home', PageContext.Create(app, req));
 	})
 }
 

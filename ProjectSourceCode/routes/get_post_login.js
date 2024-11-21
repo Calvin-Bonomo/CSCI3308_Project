@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const { PageContext } = require('../modules/page_context');
 
 /**
  * entry point for the route module, this function is immediately called when
@@ -27,7 +28,7 @@ function main(app){
 		}
 
 		// display page
-		res.render('pages/login')
+		res.render('pages/login', PageContext.Create(app, req))
 	})
 
 	app.post('/login', async (req, res) => {
@@ -58,7 +59,7 @@ function main(app){
 	    	})
 			.catch(err => {
 				console.error(err)
-				res.status(400).render('pages/login')
+				res.status(400).render('pages/login', PageContext.Create(app, req))
 			})
 		if(!user_found){
 			console.warn("User not found - " + user.username)
@@ -71,7 +72,7 @@ function main(app){
 		console.log("comparing hashes...")
 
 	    if (!match) {
-			res.status(400).render('pages/login');
+			res.status(400).render('pages/login', PageContext.Create(app, req));
 			console.warn("Pasword hash mismatch!")
 	    } 
 	    else {

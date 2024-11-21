@@ -1,4 +1,5 @@
 const bcrypt = require('bcryptjs');
+const { PageContext } = require('../modules/page_context');
 
 /**
  * entry point for the route module, this function is immediately called when
@@ -50,7 +51,7 @@ function main(app){
 				user.password = pass_hashed
 			})
 			.catch(err => {
-				res.status(400).render("pages/register")
+				res.status(400).render("pages/register", PageContext.Create(app, req))
 				throw err
 			})
 		
@@ -58,7 +59,7 @@ function main(app){
 		let user_exists = false
 		await database.none("SELECT username FROM users WHERE username = $1", [user.username])
 			.catch(err => {
-				res.status(400).render("pages/register")
+				res.status(400).render("pages/register", PageContext.Create(app, req))
 				console.warn(err)
 				user_exists = true
 			})
@@ -79,7 +80,7 @@ function main(app){
 				console.log("registered new user '" + user.username + "'")
 			})
 			.catch(err => {
-				res.status(400).render("pages/register")
+				res.status(400).render("pages/register", PageContext.Create(app, req))
 				throw err
 			})
 	});
