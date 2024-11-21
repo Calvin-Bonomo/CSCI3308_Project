@@ -21,7 +21,7 @@ INSERT INTO posts (
 	upvotes, downvotes
 ) VALUES (
 	'Technostalgic', 
-	'Laboratory for Atmospheric and Space Phyics at CU', 
+	'Laboratory for Atmospheric and Space Physics at CU', 
 	'Undergraduate Python Developer',
 	'https://lasp.colorado.edu/careers/',
 	2,
