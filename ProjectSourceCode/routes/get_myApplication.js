@@ -1,3 +1,5 @@
+const { PageContext } = require('../modules/page_context');
+
 /**
  * entry point for the route module, this function is immediately called when
  * the file is loaded by index.js
@@ -13,7 +15,7 @@ function main(app){
 
     // render myApplications page
     app.get('/my_applications', (req, res) => {
-        res.render('pages/myApplications');
+        res.render('pages/myApplications', PageContext.Create(app, req));
     })
 }
 
