@@ -17,15 +17,14 @@ function main(app){
     app.get('/find_applications', (req, res) => {
       const query = "select * from posts order by time_posted desc limit $1 offset $2;";
 
-      database.any(query, [page_size, page]).then(data => {
-        res.render('pages/findApplications').json({
-          posts: data,
+      database.any(query, [page_size, page])
+        .then(data => {
+          res.render('pages/findApplications', {posts: data})
+        })
+        .catch(err => {
+          console.error(err)
+          res.status(400).end()
         });
-      }).catch(err => {
-          console.warn("failed to select from posts");
-          res.render('pages/findApplications');
-      });
-
     })
 }
 
