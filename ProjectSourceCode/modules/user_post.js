@@ -2,8 +2,6 @@
  * @typedef {import('pg-promise').IDatabase} IDatabase
  */
 
-const { query } = require('express');
-
 /** @enum {number} */
 const JOB_MODALITY = Object.freeze({
 	IN_PERSON: 0,
