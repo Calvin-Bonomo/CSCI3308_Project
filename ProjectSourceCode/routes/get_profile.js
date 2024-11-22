@@ -21,11 +21,20 @@ function main(app){
 		if(!req.session.user) {
 			console.warn("attempt to access profile while not logged in, redirecting to login..")
 			res.status(400).redirect('/login')
-			return
+			return;
 		}
 
-		// display page
-		res.render('pages/profile', PageContext.Create(app, req));
+    database.one("SELECT * from users WHERE username = $1;", [req.session.user.username])
+      .then(data => {
+        // display page
+		    res.render('pages/profile', PageContext.Create(app, req, {
+          "username": data.username,
+          "description": data.description,
+          "image_url": data.image_url
+        }));
+      }).catch(err => {
+        res.status(400).redirect('/home');
+      });
 	})
 }
 
