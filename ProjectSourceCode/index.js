@@ -38,7 +38,7 @@ const hbs = handlebars.create({
   partialsDir: __dirname + '/views/partials',
 });
 
-// Register `hbs` as our view engine using its bound `engine()` function.
+// Register hbs as our view engine using its bound engine() function.
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
@@ -60,6 +60,7 @@ app.use(
 // this index.js file so frequently, allowing multiple of us to implement different routes
 // simultaneously without having to worry about messing up the git vcs tree.
 // You can use the 'get.js' file as a template for adding new routes.
+
 
 const routesDir = path.join(__dirname, "routes");
 console.log("Looking for routes in " + routesDir + "...")
