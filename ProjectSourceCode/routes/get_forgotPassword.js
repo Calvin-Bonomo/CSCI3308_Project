@@ -1,11 +1,23 @@
-// create object to export routes through
-const expressJs = require('express');
-const router = expressJs.Router();
+const { PageContext } = require('../modules/page_context');
 
-// display homepage when connecting to website root
-router.get('/forgot_password', (req, res) => {
-	res.render('pages/forgotPassword');
-})
+/**
+ * entry point for the route module, this function is immediately called when
+ * the file is loaded by index.js
+ * @typedef {import('express').Express} ExpressJs
+ * @typedef {import('pg-promise').IDatabase} IDatabase
+ * @param {ExpressJs} app 
+ */
+function main(app){
 
-// export the specified routes in this file
-module.exports = router;
+    // get handle to database from app
+    /** @type {IDatabase} */
+    const database = app.database
+
+	// display forgot password page when url is requested
+	app.get('/forgot_password', (req, res) => {
+		res.render('pages/forgotPassword', PageContext.Create(app, req));
+	})
+}
+
+// export the specified entry point
+module.exports = main;

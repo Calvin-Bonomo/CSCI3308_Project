@@ -1,85 +1,16 @@
 <div class="container my-4">
   <div class="row">
     <div class="col text-center">
-      <h2>Internship List</h2>
+      <h2>My Applications</h2>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      <div class="card p-4 rounded shadow-sm">
-        <form action="/save_application" method="POST">
-          <table class="table table-bordered">
-            <thead class="thead-light">
-              <tr>
-                <th scope="col">Company</th>
-                <th scope="col">Position</th>
-                <th scope="col">Date Applied</th>
-                <th scope="col">Salary</th>
-                <th scope="col">Application Status</th>
-                <th scope="col">Interview Rounds</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><input type="text" name="company" class="form-control" placeholder="Company" required></td>
-                <td><input type="text" name="position" class="form-control" placeholder="Position" required></td>
-                <td><input type="date" name="application_date" class="form-control" required></td>
-                <td><input type="number" step="0.01" name="salary" class="form-control" placeholder="Salary"></td>
-                <td>
-                  <select name="application_status" class="form-control" required>
-                    <option value="Submitted">Submitted</option>
-                    <option value="Rejected">Rejected</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Accepted">Accepted</option>
-                  </select>
-                </td>
-                <td><input type="number" name="interview_rounds" class="form-control" placeholder="Interview Rounds"></td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="d-flex justify-content-end">
-            <button type="submit" class="btn btn-primary">Save</button>
-          </div>
-        </form>
-        <div id="applications-list" class="mt-4">
-          {{#each applications}}
-          <div class="card mb-3">
-            <div class="card-body">
-              <form action="/update_application/{{this.application_id}}" method="POST">
-                <div class="row mb-2">
-                  <div class="col-md-2">
-                    <input type="text" name="company" class="form-control" value="{{this.company}}" required>
-                  </div>
-                  <div class="col-md-2">
-                    <input type="text" name="position" class="form-control" value="{{this.position}}" required>
-                  </div>
-                  <div class="col-md-2">
-                    <input type="date" name="application_date" class="form-control" value="{{this.application_date}}" required>
-                  </div>
-                  <div class="col-md-2">
-                    <input type="number" step="0.01" name="salary" class="form-control" value="{{this.salary}}">
-                  </div>
-                  <div class="col-md-2">
-                    <select name="application_status" class="form-control" required>
-                      <option value="Submitted" {{#ifEquals this.application_status "Submitted"}}selected{{/ifEquals}}>Submitted</option>
-                      <option value="Rejected" {{#ifEquals this.application_status "Rejected"}}selected{{/ifEquals}}>Rejected</option>
-                      <option value="In Progress" {{#ifEquals this.application_status "In Progress"}}selected{{/ifEquals}}>In Progress</option>
-                      <option value="Accepted" {{#ifEquals this.application_status "Accepted"}}selected{{/ifEquals}}>Accepted</option>
-                    </select>
-                  </div>
-                  <div class="col-md-2">
-                    <input type="number" name="interview_rounds" class="form-control" value="{{this.interview_rounds}}">
-                  </div>
-                </div>
-                <div class="d-flex justify-content-end">
-                  <button type="submit" class="btn btn-success">Update</button>
-                </div>
-              </form>
-            </div>
-          </div>
-          {{/each}}
-        </div>
-      </div>
+  {{#each applications}}
+    {{> application }}
+  {{/each}}
+  <div class="row mt-4">
+    <div class="col text-center">
+      <button type="button" class="btn btn-primary" onclick="window.location.href='/add_application'">Add New Application</button>
     </div>
   </div>
 </div>
+
