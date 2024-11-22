@@ -19,7 +19,7 @@ const app = expressJs();
 // connect the database and store a handle to it
 /** @type {pgPromise.IDatabase} */
 const database = pgPromise()({
-	host: 'db',
+	host: process.env.HOST || 'db',
 	port: 5432,
 	database: process.env.POSTGRES_DB,
 	user: process.env.POSTGRES_USER,
