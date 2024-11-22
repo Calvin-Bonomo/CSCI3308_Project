@@ -1,8 +1,18 @@
-<div class="container-fluid text-center d-flex align-items-center justify-content-center" style="height: 100vh;">
+{{#if session.user}}
+<div class="container-fluid text-center d-flex align-items-center justify-content-center" style="height: 25vh;">
+  <h1>Welcome, {{session.user.username}}, to Career Compass</h1>
+</div>
+{{else}}
+<div class="container-fluid text-center d-flex align-items-center justify-content-center" style="height: 50vh;">
   <div>
-    <h1>Welcome to Career Compass</h1>
+    <h1>Welcome, Guest, to Career Compass</h1>
     <p class="mt-4">
-      You can register <a href="/register" >here</a>, or you can explore the other features of Career Compass.
+      You can register <a href="/register">here</a>, or you can explore the other features of Career Compass.
     </p>
   </div>
 </div>
+{{/if}}
+
+
+
+
