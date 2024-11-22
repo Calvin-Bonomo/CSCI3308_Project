@@ -53,19 +53,15 @@ describe('Server!', () => {
         done();
       });
   });
-
-  // This one will fail unless running for the first time since it creates a new user which will
-  // succeed the first time but will not succeed again because registering the same user twice
-  // causes an error
-  // 
-  // it('/register functionality works', done => {
-  //   chai
-  //     .request(server)
-  //     .post('/register')
-  //     .send({username: 'test123', password: 'test123'})
-  //     .end((err, res) => {
-  //       expect(res).to.have.status(200);
-  //       done();
-  //     });
-  // });
+  
+  it('/register does not register pre-existing users', done => {
+    chai
+      .request(server)
+      .post('/register')
+      .send({username: 'Technostalgic', password: 'password'})
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        done();
+      });
+  });
 });
