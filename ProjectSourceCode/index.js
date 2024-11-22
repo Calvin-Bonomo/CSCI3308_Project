@@ -27,6 +27,19 @@ const database = pgPromise()({
 });
 app.database = database
 
+// we can use an environment variable to check whether or not we want to 
+// reinitialize the database from the database initialization scripts
+if (process.env.REINITIALIZE_DB == "yes") {
+	console.log("REINITIALIZE_DB is set to 'yes', re-running db initialization..")
+	const dbInitDir = path.join(__dirname, "InitData");
+	fs.readdirSync(dbInitDir).forEach((filename) => {
+		const filepath = path.join(dbInitDir, filename)
+		let  dbScript = fs.readFileSync(filepath, 'utf8');
+		console.log("execute init script: " + filename)
+		database.any(dbScript);
+	})
+}
+
 // parse json in request body / forms
 app.use(expressJs.json())
 app.use(expressJs.urlencoded({extended: true}));

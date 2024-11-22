@@ -1,4 +1,4 @@
-CREATE TABLE posts
+CREATE TABLE IF NOT EXISTS posts
 (
     post_id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE posts
     FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE
 );
 
-CREATE TABLE comments
+CREATE TABLE IF NOT EXISTS comments
 (
     comment_id SERIAL PRIMARY KEY,
     post_id INT NOT NULL,

@@ -1,4 +1,4 @@
-CREATE TABLE interviewers
+CREATE TABLE IF NOT EXISTS interviewers
 (
   interviewer_id SERIAL PRIMARY KEY,          -- Unique identifier for each interviewer
   application_id INT REFERENCES application(application_id) ON DELETE CASCADE, --relation

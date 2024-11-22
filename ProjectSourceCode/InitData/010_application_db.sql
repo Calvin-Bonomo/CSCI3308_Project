@@ -1,5 +1,5 @@
 --table for each unique job application 
-CREATE TABLE application (
+CREATE TABLE IF NOT EXISTS application (
     application_id SERIAL PRIMARY KEY,
     employer VARCHAR(100) NOT NULL,
     job_title VARCHAR(100) NOT NULL,
