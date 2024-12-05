@@ -8,30 +8,30 @@ const { PageContext } = require('../modules/page_context');
  * @param {ExpressJs} app the ExpressJs app instance is passed into our 
  * 		function from index.js
  */
-function main(app){
+function main(app) {
 
-    // get handle to database from app
-    /** @type {IDatabase} */
-    const database = app.database
+  // get handle to database from app
+  /** @type {IDatabase} */
+  const database = app.database
 
-	// display login page
-	app.get('/profile', (req, res) => {
+  // display login page
+  app.get('/profile/:username', (req, res) => {
 
-		// ensure user is logged in
-		if(!req.session.user) {
-			console.warn("attempt to access profile while not logged in, redirecting to login..")
-			res.status(400).redirect('/login')
-			return;
-		}
+    // ensure user is logged in
+    // if(!req.session.user) {
+    // 	console.warn("attempt to access profile while not logged in, redirecting to login..")
+    // 	res.status(400).redirect('/login')
+    // 	return;
+    // }
 
-    database.one("SELECT * from users WHERE username = $1;", [req.session.user.username])
+    database.one("SELECT * from users WHERE username = $1;", [req.params.username])
       .then(data => {
         // display page
-		    res.render('pages/profile', PageContext.Create(app, req, data));
+        res.render('pages/profile', PageContext.Create(app, req, data));
       }).catch(err => {
         res.status(400).redirect('/home');
       });
-	})
+  })
 }
 
 // export the specified entry point
