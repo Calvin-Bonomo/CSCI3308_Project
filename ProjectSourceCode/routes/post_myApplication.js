@@ -24,3 +24,6 @@ function main(app){
         }
     });
 }
+
+// export the specified entry point
+module.exports = main;
