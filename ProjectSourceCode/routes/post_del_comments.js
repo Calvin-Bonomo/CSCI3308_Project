@@ -32,6 +32,7 @@ function main(app) {
 			})
 	});
 
+	// remove specified comment from database
 	app.delete('/remove_comment/:comment_id', (req, res) => {
 		const comment_id = Number.parseInt(req.params.comment_id)
 		console.log('Removing comment id #', comment_id)
