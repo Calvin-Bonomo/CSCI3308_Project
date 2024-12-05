@@ -27,11 +27,7 @@ function main(app){
     database.one("SELECT * from users WHERE username = $1;", [req.session.user.username])
       .then(data => {
         // display page
-		    res.render('pages/profile', PageContext.Create(app, req, {
-          "username": data.username,
-          "description": data.description,
-          "image_url": data.image_url
-        }));
+		    res.render('pages/profile', PageContext.Create(app, req, data));
       }).catch(err => {
         res.status(400).redirect('/home');
       });
