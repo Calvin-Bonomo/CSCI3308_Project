@@ -10,16 +10,19 @@ const {assert, expect} = chai;
 // ********** EVERYTHING BELOW HERE IS DIFFERENT FOR EACH TEST FILE ************
 
 describe('Application Server Tests', () => {
+
+  // DEPRECATED - ny_applications page now only shows applications associated
+  // with the user that is logged in, so there is no public my_applications
   // Test case for /my_applications endpoint
-  it('/my_applications should return list of applications', done => {
-    chai
-      .request(server)
-      .get('/my_applications')
-      .end((err, res) => {
-        expect(res).to.have.status(200);
-        done();
-      });
-  });
+  // it('/my_applications should return list of applications', done => {
+  //   chai
+  //     .request(server)
+  //     .get('/my_applications')
+  //     .end((err, res) => {
+  //       expect(res).to.have.status(200);
+  //       done();
+  //     });
+  // });
 
   // Test case for /save_application endpoint
   it('/save_application should save a new application', done => {
