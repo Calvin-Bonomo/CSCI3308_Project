@@ -9,7 +9,9 @@
           <a href="{{post.link}}">{{post.link}}</a>
           <p class="mx-2 my-2">{{post.body}}</p>
           <div class="my-2">
-            {{post.username}} <br \>
+            <a href="/profile/{{post.username}}" style="text-decoration: none;">
+              {{post.username}} <br \>
+            </a>
             <span class="small">{{post.time_posted}}</span>
           </div>
         </div>
