@@ -6,7 +6,7 @@ INSERT INTO users (
 ) VALUES (
 	'Technostalgic',
 	'$2a$10$yPd6rqLe1z2l/59fAIEAFe4h8E3mOinYnJVLZHm3nm20/pFVVup/q',
-	'Huge fuckin nerd',
+	'Big ol'' nerd',
 	'https://technostalgic.gitlab.io/portfolio/files/media/avatar.png'
 ) ON CONFLICT (username) DO NOTHING;
 

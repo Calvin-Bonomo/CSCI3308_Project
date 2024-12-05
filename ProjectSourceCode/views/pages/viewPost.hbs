@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col">
       <h2>View Post</h2>
-      <div style="max-width:500px; margin:auto;">
+      <div style="max-width:600px; margin:auto;">
         <div class="card px-2 py-2">
           <h2>{{post.position}}</h2>
           <div>{{post.company_name}}</div>
@@ -15,7 +15,7 @@
         </div>
         <hr />
         {{#if session.user}}
-        <div style="text-align: right; margin-bottom: 6vh;">
+        <div class="mx-4" style="text-align: right; margin-bottom: 6vh;">
           <form method="post" action="/add_comment/{{post.post_id}}">
             <textarea class="form-control" placeholder="Say something.." name="comment" required></textarea>
             <br />

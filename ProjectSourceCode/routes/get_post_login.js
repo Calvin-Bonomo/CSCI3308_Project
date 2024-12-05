@@ -43,7 +43,8 @@ function main(app) {
 		// create user object to store info from database
 		const user = {
 			username: req.body.username,
-			password: ""
+			password: "",
+			image_url: "",
 		}
 		console.log("attempting login for user - " + user.username)
 

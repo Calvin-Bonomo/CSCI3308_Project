@@ -73,7 +73,7 @@ function main(app) {
 			res.status(400).render(
 				"pages/register", 
 				PageContext.Create(app, req, {
-					popup: {message: "Username already taken, choose another"}
+					popup: { message: "Username already taken, choose another" }
 				})
 			)
 			return
@@ -81,14 +81,15 @@ function main(app) {
 
 		// insert new user entry
 		const query = (
-			"INSERT INTO users (username, password, description, image_url)" +
-			"VALUES ($1, $2, 'empty', '')" +
-			"ON CONFLICT (username) DO NOTHING;"
+			"INSERT INTO users (username, password, description) " +
+			"VALUES ($1, $2, 'empty') " +
+			"ON CONFLICT (username) DO NOTHING " +
+			"RETURNING *"
 		)
-		await database.none(query, [user.username, user.password])
-			.then(() => {
+		await database.one(query, [user.username, user.password])
+			.then((data) => {
 				res.status(200).redirect("/login")
-				console.log("registered new user '" + user.username + "'")
+				console.log("registered new user", data)
 			})
 			.catch(err => {
 				res.status(400).render("pages/register", PageContext.Create(app, req))
