@@ -16,10 +16,18 @@ function main(app){
 	// display homepage when connecting to website root
 	app.get('/view_post/:id', (req, res) => {
 		console.log("viewing post id:", req.params.id)
-		database.one("SELECT * from POSTS WHERE post_id=$1", [Number.parseInt(req.params["id"])])
-			.then((data) => {
+		const post_id = Number.parseInt(req.params["id"])
+		database.one("SELECT * FROM posts WHERE post_id=$1", [post_id])
+			.then(async (data) => {
+				const comments = await database.any(
+					"SELECT * FROM comments WHERE post_id=$1", 
+					[post_id]
+				)
+				console.log("found ", comments.length, " comments")
+				console.log(comments)
 				res.status(200).render('pages/viewPost', PageContext.Create(app, req, {
-					post: data
+					post: data,
+					comments
 				}));
 			})
 			.catch((err) => {
