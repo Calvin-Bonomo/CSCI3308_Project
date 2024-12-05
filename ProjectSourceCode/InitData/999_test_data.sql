@@ -55,4 +55,14 @@ INSERT INTO posts (
 	'Pretty ☀ Pics',
 	3000,
 	0, 0
-) ON CONFLICT (post_id) DO NOTHING;
+) ON CONFLICT (post_id) DO UPDATE SET
+	username = EXCLUDED.username,
+	company_name = EXCLUDED.company_name,
+	position = EXCLUDED.position,
+	link = EXCLUDED.link,
+	modality = EXCLUDED.modality,
+	body = EXCLUDED.body,
+	salary = EXCLUDED.salary,
+	upvotes = EXCLUDED.upvotes,
+	downvotes = EXCLUDED.downvotes
+;
