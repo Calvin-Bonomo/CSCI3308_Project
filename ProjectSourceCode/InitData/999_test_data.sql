@@ -8,6 +8,11 @@ INSERT INTO users (
 	'$2a$10$yPd6rqLe1z2l/59fAIEAFe4h8E3mOinYnJVLZHm3nm20/pFVVup/q',
 	'Big ol'' nerd',
 	'https://technostalgic.gitlab.io/portfolio/files/media/avatar.png'
+),(
+	'Pepper',
+	'$2a$10$yPd6rqLe1z2l/59fAIEAFe4h8E3mOinYnJVLZHm3nm20/pFVVup/q',
+	'Currently probably asleep or scratching expensive furniture',
+	'https://cdn.discordapp.com/attachments/541309973938831421/1271233273909088286/IMG_20240808_162559026.jpg?ex=6752d17e&is=67517ffe&hm=4479097ed5169455db8c10fa1db759c58ad08566f85b9e02d0affb11a2fdbf93&'
 ) ON CONFLICT (username) DO NOTHING;
 
 INSERT INTO posts (
