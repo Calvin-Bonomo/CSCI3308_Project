@@ -37,6 +37,16 @@ INSERT INTO posts (
 	0, 0
 ),(
 	2,
+	'Pepper', 
+	'Purrrfect Solutions Inc.', 
+	'Chief Gravity Tester',
+	'https://www.youtube.com/watch?v=09CC-dYDNMQ',
+	0,
+	'It''s tough knocking stuff over all day',
+	3.50,
+	0, 0
+),(
+	3,
 	'Technostalgic',
 	'National Solar Observatory',
 	'Undergraduate Research Assistant',

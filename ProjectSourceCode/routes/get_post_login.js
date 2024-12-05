@@ -55,6 +55,7 @@ function main(app) {
 			.then(data => {
 				user.username = data.username;
 				user.password = data.password;
+				user.image_url = data.image_url;
 				user_found = true;
 				console.log("found user in database - " + user.username)
 			})

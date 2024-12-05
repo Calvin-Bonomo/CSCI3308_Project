@@ -20,20 +20,20 @@
           </li>
         </ul>
         {{#if session.user}}
-        <div class="nav-item me-1">
-          <a href="/profile/{{session.user.username}}">
-            {{#if session.user.image_url}}
-            <img src={{session.user.image_url}} alt="Your profile picture">
-            {{else}}
-            <img src="" alt="{{session.user.username}}">
-            {{/if}}
+        <div class="nav-item me-4">
+          <a href="/profile/{{session.user.username}}" style="text-decoration: none;">
+            <img 
+              src="{{session.user.image_url}}" 
+              style="border-radius:100%; width:32px; height:32px; object-fit: cover;"
+            >
+            {{session.user.username}}
           </a>
         </div>
-        <div class="nav-item me-1">
+        <div class="nav-item me-4">
           <a class="nav-link" href="/logout">Logout</a>
         </div>
         {{else}}
-        <div class="nav-item me-1">
+        <div class="nav-item me-4">
           <a class="nav-link" href="/login">Login</a>
         </div>
         {{/if}}
