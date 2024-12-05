@@ -21,7 +21,7 @@
         </ul>
         {{#if session.user}}
         <div class="nav-item me-1">
-          <a href="/profile">
+          <a href="/profile/{{session.user.username}}">
             {{#if session.user.image_url}}
             <img src={{session.user.image_url}} alt="Your profile picture">
             {{else}}

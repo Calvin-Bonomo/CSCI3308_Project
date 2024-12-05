@@ -85,7 +85,7 @@ function main(app) {
 			// save user details in session like in lab 7
 			req.session.user = user;
 			req.session.save();
-			res.status(200).redirect("/profile")
+			res.status(200).redirect("/profile/" + user.username)
 			console.log("login succsessful!")
 		}
 	});
