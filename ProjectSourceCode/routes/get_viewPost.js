@@ -20,7 +20,10 @@ function main(app){
 		database.one("SELECT * FROM posts WHERE post_id=$1", [post_id])
 			.then(async (data) => {
 				const comments = await database.any(
-					"SELECT * FROM comments WHERE post_id=$1", 
+					`
+					SELECT * FROM comments WHERE post_id=$1
+					ORDER BY time_posted DESC
+					`, 
 					[post_id]
 				)
 				console.log("found ", comments.length, " comments")
