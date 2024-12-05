@@ -35,11 +35,11 @@ app.database = database
 if (process.env.REINITIALIZE_DB == "yes") {
 	console.log("REINITIALIZE_DB is set to 'yes', re-running db initialization..")
 	const dbInitDir = path.join(__dirname, "InitData");
-	fs.readdirSync(dbInitDir).forEach((filename) => {
+	fs.readdirSync(dbInitDir).forEach( async (filename) => {
 		const filepath = path.join(dbInitDir, filename)
 		let  dbScript = fs.readFileSync(filepath, 'utf8');
 		console.log("execute init script: " + filename)
-		database.any(dbScript);
+		await database.any(dbScript);
 	})
 }
 
