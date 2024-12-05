@@ -1,5 +1,5 @@
-DROP TABLE posts;
-DROP TABLE comments;
+DROP TABLE posts CASCADE;
+DROP TABLE comments CASCADE;
 
 CREATE TABLE IF NOT EXISTS posts
 (
