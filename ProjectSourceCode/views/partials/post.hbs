@@ -1,19 +1,25 @@
-<div class="card" style="width:45%">
+<div class="card my-4">
     <div class="card-body">
-        <h2>
-            {{position}} @ {{company_name}}
-        </h2>
-        <h5>
-            Salary: {{salary}}
-        </h5>
-        <h5>
-            Link: {{link}}
-        </h5>
-        <h5>
-            Modality: {{modality_string}}
-        </h5>
-        <div>
-            Posted by {{username}} on {{time_posted}}, {{points}} points
+        <p>
+            <h2>{{position}}</h2>
+            <div>{{company_name}}</div>
+            <a href="{{link}}">{{link}}</a>
+            <hr />
+            <h5>
+                ${{salary}} / yr - {{modality_string}}
+            </h5>
+        </p>
+        <p>{{body}}</p>
+        <div class="my-2">
+            Posted by {{username}} <br \>
+            <small>{{time_posted}}</small>
         </div> 
+        <div>
+            <a href="/view_post/{{post_id}}" class="btn btn-primary">View Comments</a>
+            <span class="mx-2"></span>
+            <button class="btn btn-primary">👎</button>
+            <span class="btn btn-primary" style="cursor: unset;">{{points}}</span>
+            <button href="/" class="btn btn-primary">👍</button>
+        </div>
     </div>
 </div>

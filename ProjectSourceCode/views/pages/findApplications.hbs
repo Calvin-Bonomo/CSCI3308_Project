@@ -1,10 +1,12 @@
 <div class="container my-4">
   <div class="row">
-    <div class="col text-center">
+    <div class="col">
       <h2>Find Internships</h2>
+      <div style="width:45%; margin:auto;">
+        {{#each posts}}
+          {{>post}}
+        {{/each}}
+      </div>
     </div>
   </div>
-  {{#each posts}}
-    {{>post }}
-  {{/each}}
 </div>

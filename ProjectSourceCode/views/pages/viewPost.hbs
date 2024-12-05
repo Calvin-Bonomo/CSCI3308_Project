@@ -1,0 +1,20 @@
+<div class="container my-4">
+  <div class="row">
+    <div class="col">
+      <h2>{{post.position}}</h2>
+      <div style="width:45%; margin:auto;">
+        <div>
+          <!-- Post Here -->
+          <h1>Post body</h1>
+          <hr />
+        </div>
+        <div>
+          <!-- Comments -->
+          {{#each comments}}
+            {{> comment}}
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
