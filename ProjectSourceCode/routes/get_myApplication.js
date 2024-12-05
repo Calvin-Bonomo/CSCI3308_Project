@@ -14,22 +14,15 @@ function main(app){
     // get handle to database from app
     /** @type {IDatabase} */
     const database = app.database;
-    const page = 1;
-    const page_size = 10;
-
-    // Register handlebars helpers
-    handlebars.registerHelper('formatDate', function(date) {
-        if (!date) return '';
-        return new Date(date).toLocaleDateString();
-    });
-
-    handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
-        return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
-    });
 
     // render myApplications page with applications data
     app.get('/my_applications', (req, res) => {
-        Application.fetchAll(database, page_size, (page - 1) * page_size)
+        if (!req.session.user){
+            console.error('attempt to access my applications while not logged in');
+            res.status(400).send("You must be logged in");
+            return;
+        }
+        Application.fetchByUser(database, req.session.user.username)
             .then(applications => {
                 res.render('pages/myApplications', PageContext.Create(app, req, { applications }));
             })

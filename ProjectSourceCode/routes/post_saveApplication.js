@@ -18,7 +18,12 @@ function main(app){
         console.log('Request received to save application:', req.body); // Log request data
 
         // Parse the input values with more type safety
-        const newApplication = Application.FromJson(req.body);
+        let newApplication = Application.FromJson(req.body);
+
+        // insert user associated with application
+        if (req.session.user?.username){
+            newApplication.username = req.session.user.username;
+        }
 
         // Explicitly parse the optional values to ensure they are the correct type
         newApplication.salary = parseFloat(req.body.salary) || 0;

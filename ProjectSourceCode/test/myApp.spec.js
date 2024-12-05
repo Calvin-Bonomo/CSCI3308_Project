@@ -24,6 +24,7 @@ describe('Application Server Tests', () => {
   // Test case for /save_application endpoint
   it('/save_application should save a new application', done => {
     const newApplication = {
+      username: 'Technostalgic',
       employer: 'Test Employer',
       job_title: 'Test Job',
       application_status: 'Applied',

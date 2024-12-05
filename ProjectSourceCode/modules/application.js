@@ -9,6 +9,8 @@ class Application {
 
     /** @type {number} application_id The unique application id for this application */
     application_id;
+    /** @type {string} the user that the application belongs to */
+    username;
     /** @type {string} employer The employer for the job application */
     employer;
     /** @type {string} job_title The title of the job applied for */
@@ -24,6 +26,7 @@ class Application {
 
     constructor() {
         this.application_id = null;
+        this.username = "";
         this.employer = "";
         this.job_title = "";
         this.application_date = new Date();
@@ -54,11 +57,12 @@ class Application {
      */
     async save(database) {
         const query = `
-            INSERT INTO application (employer, job_title, application_date, salary, application_status, interview_rounds)
-            VALUES ($1, $2, $3, $4, $5, $6)
+            INSERT INTO application (username, employer, job_title, application_date, salary, application_status, interview_rounds)
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
             RETURNING application_id;
         `;
         const values = [
+            this.username,
             this.employer,
             this.job_title,
             this.application_date,
@@ -141,6 +145,25 @@ class Application {
         const query = `SELECT * FROM application ORDER BY application_date DESC;`;
         try {
             const data = await database.any(query);
+            return data.map(app => Application.FromJson(app));
+        } catch (err) {
+            throw err;
+        }
+    }
+    
+    /**
+     * Fetch applications by user
+     * @param {IDatabase} database 
+     * @param {string} username
+     * @returns {Promise<Array<Application>>}
+     */
+    static async fetchByUser(database, username) {
+        const query = `
+            SELECT * FROM application 
+            WHERE username=$1 
+            ORDER BY application_date DESC;`;
+        try {
+            const data = await database.any(query, [username]);
             return data.map(app => Application.FromJson(app));
         } catch (err) {
             throw err;
