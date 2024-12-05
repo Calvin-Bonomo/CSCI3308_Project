@@ -10,6 +10,9 @@ const Handlebars = require('handlebars');
 const path = require('path');
 const fs = require('fs');
 
+// register handlebars helpers
+require('./modules/handlebars_helpers')(Handlebars)
+
 // Server Initialization ---------------------------------------------------------------------------
 
 // create expressjs app handle

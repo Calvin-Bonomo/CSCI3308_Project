@@ -24,7 +24,6 @@ function main(app){
 					[post_id]
 				)
 				console.log("found ", comments.length, " comments")
-				console.log(comments)
 				res.status(200).render('pages/viewPost', PageContext.Create(app, req, {
 					post: data,
 					comments

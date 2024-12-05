@@ -9,9 +9,9 @@
           <a href="{{post.link}}">{{post.link}}</a>
           <p class="mx-2 my-2">{{post.body}}</p>
           <div class="my-2">
-              {{post.username}} <br \>
-              <span class="small">{{post.time_posted}}</span>
-          </div> 
+            {{post.username}} <br \>
+            <span class="small">{{post.time_posted}}</span>
+          </div>
         </div>
         <hr />
         {{#if session.user}}
@@ -26,10 +26,27 @@
         <div class="my-4">
           <!-- Comments -->
           {{#each comments}}
-            {{>comment parameter=session }}
+          {{>comment parameter=session }}
           {{/each}}
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+  // functionality for deleting comments will be used in >comments partial
+  function deleteComment(commentId) {
+    if (confirm('Delete Comment?')) {
+      fetch('/remove_comment/' + commentId, {
+        method: 'DELETE'
+      }).then(response => {
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          alert('Failed to delete application.' + response.status);
+        }
+      });
+    }
+  }
+</script>
