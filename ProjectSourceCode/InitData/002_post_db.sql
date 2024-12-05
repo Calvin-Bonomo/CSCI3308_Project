@@ -1,3 +1,6 @@
+DROP TABLE posts;
+DROP TABLE comments;
+
 CREATE TABLE IF NOT EXISTS posts
 (
     post_id SERIAL PRIMARY KEY,

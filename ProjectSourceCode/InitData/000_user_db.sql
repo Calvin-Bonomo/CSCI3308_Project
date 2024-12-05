@@ -1,3 +1,5 @@
+DROP TABLE users;
+
 CREATE TABLE IF NOT EXISTS users
 (
   username VARCHAR(50) PRIMARY KEY,

@@ -1,3 +1,5 @@
+DROP TABLE application;
+
 --table for each unique job application 
 CREATE TABLE IF NOT EXISTS application (
     application_id SERIAL PRIMARY KEY,

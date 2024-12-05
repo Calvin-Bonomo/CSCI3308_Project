@@ -1,3 +1,5 @@
+DROP TABLE interviewers;
+
 CREATE TABLE IF NOT EXISTS interviewers
 (
   interviewer_id SERIAL PRIMARY KEY,          -- Unique identifier for each interviewer
