@@ -9,19 +9,19 @@ const { PageContext } = require('../modules/page_context');
  * @param {ExpressJs} app the ExpressJs app instance is passed into our 
  * 		function from index.js
  */
-function main(app){
+function main(app) {
 
-    // get handle to database from app
-    /** @type {IDatabase} */
-    const database = app.database
+	// get handle to database from app
+	/** @type {IDatabase} */
+	const database = app.database
 
 	// Login ---------------------------------------------------------------------------------------
 
 	// render login page
 	app.get('/login', (req, res) => {
-		
+
 		// ensure user is not already logged in
-		if(req.session.user) {
+		if (req.session.user) {
 			console.warn("attempt to access login while logged in, redirecting..")
 			res.status(400).redirect('/landing')
 			return
@@ -32,9 +32,9 @@ function main(app){
 	})
 
 	app.post('/login', async (req, res) => {
-		
+
 		// ensure user is not already logged in
-		if(req.session.user) {
+		if (req.session.user) {
 			console.warn("abort attempt to login while logged in")
 			res.status(400).end()
 			return
@@ -49,39 +49,45 @@ function main(app){
 
 		// fetch user data
 		let user_found = false
-		const select_query=`SELECT * FROM users WHERE username = $1;`;
-	    await database.one(select_query, [user.username])
+		const select_query = `SELECT * FROM users WHERE username = $1;`;
+		await database.one(select_query, [user.username])
 			.then(data => {
 				user.username = data.username;
 				user.password = data.password;
 				user_found = true;
 				console.log("found user in database - " + user.username)
-	    	})
+			})
 			.catch(err => {
 				console.error(err)
-				res.status(400).render('pages/login', PageContext.Create(app, req))
 			})
-		if(!user_found){
+		if (!user_found) {
 			console.warn("User not found - " + user.username)
+			res.status(400).render('pages/login', PageContext.Create(
+				app, req,
+				{popup: {message: "User not found"}}
+			))
 			return
 		}
 
 		// check if password from request matches with password in DB
 		console.log("hashing password input...")
-	    const match = await bcrypt.compare(req.body.password, user.password)
+		const match = await bcrypt.compare(req.body.password, user.password)
 		console.log("comparing hashes...")
 
-	    if (!match) {
-			res.status(400).render('pages/login', PageContext.Create(app, req));
+		if (!match) {
 			console.warn("Pasword hash mismatch!")
-	    } 
-	    else {
-	        // save user details in session like in lab 7
-	        req.session.user = user;
-	        req.session.save();
-			res.status(200).redirect("/landing")
+			res.status(400).render('pages/login', PageContext.Create(
+				app, req,
+				{ popup: { message: "Incorrect password" } })
+			);
+		}
+		else {
+			// save user details in session like in lab 7
+			req.session.user = user;
+			req.session.save();
+			res.status(200).redirect("/profile")
 			console.log("login succsessful!")
-	    }
+		}
 	});
 }
 
