@@ -20,7 +20,7 @@ function main(app) {
 		// ensure user is not logged in
 		if (req.session.user) {
 			console.warn("attempt to access register while logged in, redirecting..")
-			res.status(400).redirect('/landing')
+			res.status(400).redirect('/')
 			return
 		}
 
