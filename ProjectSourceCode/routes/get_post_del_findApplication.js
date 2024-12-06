@@ -64,8 +64,39 @@ function main(app) {
 			})
 	})
 
-	app.delete("/find_applications/remove/:id", (req, res) => {
+	app.delete("/find_applications/remove/:id", async (req, res) => {
+				
+		// ensure user is logged in
+		if (!req.session.user) {
+			console.warn("abort attempt to post while not logged in")
+			res.status(400).end()
+			return
+		}
+		
+		// get post owner
+		const post_id = Number.parseInt(req.params.id);
+		let post_username = "" 
+		await database.one(
+			"SELECT username FROM posts WHERE post_id=$1", [post_id]
+		).then(data => {post_username = data.username});
 
+		// ensure correct user is logged in
+		if (req.session.user.username !== post_username) {
+			console.warn("wrong user attempt to remove post")
+			res.status(400).end()
+			return
+		}
+
+		// handle deletion
+		database.none("DELETE FROM posts WHERE post_id=$1", [post_id])
+			.then(() => {
+				console.log("Delete post #", post_id);
+				res.status(200).send("Delete success!");
+			})
+			.catch(err => {
+				console.error(err);
+				res.status(400).json(err);
+			})
 	})
 }
 

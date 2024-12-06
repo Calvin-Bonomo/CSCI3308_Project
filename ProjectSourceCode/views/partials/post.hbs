@@ -25,5 +25,13 @@
             <span class="btn btn-primary" style="cursor: unset;">{{points}}</span>
             <button href="/" class="btn btn-primary">👍</button>
         </div>
+	    {{#ifEquals @root.session.user.username username}}
+	    <button 
+	    	class="btn btn-danger" 
+	    	style="position:absolute; top:0; right:0; margin:10px; padding:5px;" 
+	    	onclick="deletePost({{post_id}})"
+	    >🗑️
+	    </button>
+	    {{/ifEquals}}
     </div>
 </div>

@@ -15,3 +15,20 @@
     </div>
   </div>
 </div>
+
+<script>
+  // functionality for deleting posts will be used in >post partial
+  function deletePost(postId) {
+    if (confirm('Delete Comment?')) {
+      fetch('/find_applications/remove/' + postId, {
+        method: 'DELETE'
+      }).then(response => {
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          alert('Failed to delete application.' + response.status);
+        }
+      });
+    }
+  }
+</script>
