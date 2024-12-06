@@ -39,7 +39,33 @@ function main(app) {
 			return
 		}
 
-		console.log(req.body)
+		// insert the data into db
+		database.none(
+			`INSERT INTO posts (
+				username, company_name, position, link, modality, body, salary, upvotes, downvotes
+			) VALUES ($1, $2, $3, $4, $5, $6, $7, 0, 0)`, 
+			[
+				req.session.user.username, 
+				req.body.company_name,
+				req.body.position,
+				req.body.link,
+				Number.parseInt(req.body.modality),
+				req.body.body,
+				Number.parseFloat(req.body.salary),
+			]
+		)
+			// redirect to find application page if success
+			.then(() => {
+				res.status(200).redirect("/find_applications")
+			})
+			.catch(err => {
+				console.error(err)
+				res.status(400).json(err);
+			})
+	})
+
+	app.delete("/find_applications/remove/:id", (req, res) => {
+
 	})
 }
 

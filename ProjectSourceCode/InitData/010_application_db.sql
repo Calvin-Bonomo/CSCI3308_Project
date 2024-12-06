@@ -1,4 +1,4 @@
-DROP TABLE application CASCADE;
+DROP TABLE IF EXISTS application CASCADE;
 
 --table for each unique job application 
 CREATE TABLE IF NOT EXISTS application (

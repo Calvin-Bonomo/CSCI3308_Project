@@ -1,7 +1,12 @@
 <div class="container my-4">
   <div class="row">
     <div class="col">
-      <h2>Find Positions to Apply For</h2>
+      <h2>
+        Browse Open Positions 
+        {{#if session.user}}
+          <a href="/find_applications/create" class="mx-4 btn btn-primary">Post new</a>
+        {{/if}}
+      </h2>
       <div style="max-width:600px; margin:auto;">
         {{#each posts}}
           {{>post}}

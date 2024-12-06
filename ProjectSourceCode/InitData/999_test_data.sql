@@ -16,7 +16,6 @@ INSERT INTO users (
 ) ON CONFLICT (username) DO NOTHING;
 
 INSERT INTO posts (
-	post_id,
 	username, 
 	company_name, 
 	position, 
@@ -26,7 +25,6 @@ INSERT INTO posts (
 	salary, 
 	upvotes, downvotes
 ) VALUES (
-	1,
 	'Technostalgic', 
 	'Laboratory for Atmospheric and Space Physics at CU', 
 	'Undergraduate Python Developer',
@@ -36,7 +34,6 @@ INSERT INTO posts (
 	20000,
 	0, 0
 ),(
-	2,
 	'Pepper', 
 	'Purrrfect Solutions Inc.', 
 	'Chief Gravity Tester',
@@ -46,7 +43,6 @@ INSERT INTO posts (
 	3.50,
 	0, 0
 ),(
-	3,
 	'Technostalgic',
 	'National Solar Observatory',
 	'Undergraduate Research Assistant',

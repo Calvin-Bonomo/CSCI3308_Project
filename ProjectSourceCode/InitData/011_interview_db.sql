@@ -1,4 +1,4 @@
-DROP TABLE interviewers CASCADE;
+DROP TABLE IF EXISTS interviewers CASCADE;
 
 CREATE TABLE IF NOT EXISTS interviewers
 (
